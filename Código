@@ -1,0 +1,42 @@
+// Define os pinos do sensor, do buzzer e do LED
+#define SENSOR A0
+#define BUZZER 8
+#define LED 9
+
+// Define a variável para armazenar o valor de temperatura
+float temperatura;
+
+// Executa uma vez quando o Arduino é ligado
+void setup() {
+  // Define os pinos do buzzer e do LED como saída
+  pinMode(BUZZER, OUTPUT);
+  pinMode(LED, OUTPUT);
+
+  // Inicia a comunicação serial com o computador
+  Serial.begin(9600);
+}
+
+// Executa repetidamente enquanto o Arduino está ligado
+void loop() {
+  // Lê o valor do sensor de temperatura e converte para graus Celsius
+  temperatura = analogRead(SENSOR) * 0.488;
+
+  // Mostra o valor de temperatura na tela do computador
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.println(" C");
+
+  // Se a temperatura for maior que 50, liga o LED e o buzzer
+  if (temperatura > 50) {
+    digitalWrite(LED, HIGH);
+    digitalWrite(BUZZER, HIGH);
+  }
+  // Senão, desliga o LED e o buzzer
+  else {
+    digitalWrite(LED, LOW);
+    digitalWrite(BUZZER, LOW);
+  }
+
+  // Espera um segundo antes de repetir o loop
+  delay(1000);
+}
